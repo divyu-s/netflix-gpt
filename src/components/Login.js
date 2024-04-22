@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth } from "../firebase/config";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
 
