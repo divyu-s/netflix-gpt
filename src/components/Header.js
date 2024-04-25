@@ -1,17 +1,39 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { signOut } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { addUser, removeUser } from "../store/userSlice";
+import { Image_URLs } from "../utils/constant";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(
+          addUser({
+            uid,
+            email,
+            displayName,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const signOutUser = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         // An error happened.
       });
@@ -20,16 +42,12 @@ const Header = () => {
   const user = useSelector((store) => store.user);
   return (
     <div className="mx-5 sm:absolute sm:left-0 sm:right-0 sm:z-10 xl:mx-40 bg-gradient-to-b from-black flex justify-between items-center">
-      <img
-        className="w-44"
-        src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-        alt="Netflix Logo"
-      />
+      <img className="w-44" src={Image_URLs.APP_LOGO} alt="Netflix Logo" />
       {user && (
         <div className="flex cursor-pointer">
           <img
             className="rounded-lg"
-            src="https://occ-0-6502-3646.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABeuqjuQsRgqEDlibtJTI5BMf8IxhLlLOeIT6xI4TL57mqv7XHja43gx02S8pZVe8JNGRQXjnrUk1VcsTXqi83tFKPI6OR3k.png?r=bd7"
+            src={Image_URLs.USER_ICON}
             alt="usericon"
           />
           <p className="text-white ml-1" onClick={signOutUser}>
