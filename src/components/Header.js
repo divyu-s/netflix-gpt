@@ -5,14 +5,16 @@ import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../store/userSlice";
 import { Image_URLs, SUPPORTED_LANGUAGES } from "../utils/constant";
-import { toggleGptSearchView } from "../store/gptSlice";
+import { toggleGeminiSearchView } from "../store/geminiSlice";
 import { changeLanguage } from "../store/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+  const showGeminiSearch = useSelector(
+    (store) => store.gemini.showGeminiSearch
+  );
   const langKey = useSelector((store) => store.config.lang);
 
   useEffect(() => {
@@ -44,8 +46,8 @@ const Header = () => {
       });
   };
 
-  const handleGptSearchClick = () => {
-    dispatch(toggleGptSearchView());
+  const handleGeminiSearchClick = () => {
+    dispatch(toggleGeminiSearchView());
   };
 
   const handleLanguageChange = (e) => {
@@ -58,7 +60,7 @@ const Header = () => {
 
       {user && (
         <div className="flex items-center gap-4">
-          {showGptSearch && (
+          {showGeminiSearch && (
             <select
               className="py-2 px-4 bg-gray-900 text-white"
               onChange={handleLanguageChange}
@@ -76,9 +78,9 @@ const Header = () => {
           )}
           <button
             className="py-2 px-4 bg-purple-800 rounded-lg text-white cursor-pointer"
-            onClick={handleGptSearchClick}
+            onClick={handleGeminiSearchClick}
           >
-            {showGptSearch ? "Home Page" : "GPT Search"}
+            {showGeminiSearch ? "Home Page" : "Gemini Search"}
           </button>
           <img
             className="w-12 h-12"

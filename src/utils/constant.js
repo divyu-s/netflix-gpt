@@ -23,3 +23,5 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "spanish", name: "Spanish" },
 ];
+
+export const GiminiApiKey = "AIzaSyCfolfgnDn0GRWRj636cV5I6dLWT-GnnGE";

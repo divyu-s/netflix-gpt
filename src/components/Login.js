@@ -85,7 +85,7 @@ const Login = () => {
     <div className="bg-black w-[100vw] h-[100vh] sm:relative sm:bg-none">
       <Header />
       <img
-        className="hidden w-[100vw] h-[100vh] sm:block sm:blur-sm"
+        className="hidden w-[100vw] h-[100vh] sm:block"
         src={Image_URLs.BG_URL}
         alt="Background"
       />

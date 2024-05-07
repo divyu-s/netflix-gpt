@@ -1,7 +1,7 @@
 import { Image_URLs } from "../utils/constant";
-import GPTSearchBar from "./GPTSearchBar";
+import GeminiSearchBar from "./GeminiSearchBar";
 
-const GPTSearchPage = () => {
+const GeminiSearchPage = () => {
   return (
     <>
       <img
@@ -9,9 +9,9 @@ const GPTSearchPage = () => {
         src={Image_URLs.BG_URL}
         alt="Background"
       />
-      <GPTSearchBar />
+      <GeminiSearchBar />
     </>
   );
 };
 
-export default GPTSearchPage;
+export default GeminiSearchPage;
