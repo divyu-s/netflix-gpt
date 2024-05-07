@@ -4,11 +4,16 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "../store/userSlice";
-import { Image_URLs } from "../utils/constant";
+import { Image_URLs, SUPPORTED_LANGUAGES } from "../utils/constant";
+import { toggleGptSearchView } from "../store/gptSlice";
+import { changeLanguage } from "../store/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+  const langKey = useSelector((store) => store.config.lang);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -39,18 +44,51 @@ const Header = () => {
       });
   };
 
-  const user = useSelector((store) => store.user);
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="mx-5 sm:absolute sm:left-0 sm:right-0 sm:z-10 xl:mx-40 bg-gradient-to-b from-black flex justify-between items-center">
       <img className="w-44" src={Image_URLs.APP_LOGO} alt="Netflix Logo" />
+
       {user && (
-        <div className="flex cursor-pointer">
+        <div className="flex items-center gap-4">
+          {showGptSearch && (
+            <select
+              className="py-2 px-4 bg-gray-900 text-white"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((item) => (
+                <option
+                  key={item.identifier}
+                  value={item.identifier}
+                  selected={item.identifier === langKey}
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="py-2 px-4 bg-purple-800 rounded-lg text-white cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "Home Page" : "GPT Search"}
+          </button>
           <img
-            className="rounded-lg"
+            className="w-12 h-12"
             src={Image_URLs.USER_ICON}
             alt="usericon"
           />
-          <p className="text-white ml-1" onClick={signOutUser}>
+          <p
+            className="text-white font-bold cursor-pointer"
+            onClick={signOutUser}
+          >
             (Sign Out)
           </p>
         </div>
