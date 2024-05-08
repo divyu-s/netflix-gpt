@@ -95,7 +95,9 @@ const Login = () => {
           e.preventDefault();
         }}
       >
-        <h1 className="mb-8 text-3xl font-bold">Sign In</h1>
+        <h1 className="mb-8 text-3xl font-bold">
+          {isSignInForm ? "Sign In" : "Sign Up"}
+        </h1>
         {!isSignInForm && (
           <input
             type="text"
