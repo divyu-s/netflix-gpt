@@ -2,7 +2,7 @@ import { Image_URLs } from "../utils/constant";
 
 const MovieCard = ({ posterPath }) => {
   if (!posterPath) {
-    return;
+    return null;
   }
 
   return (
