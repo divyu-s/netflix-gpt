@@ -16,7 +16,7 @@ const Browse = () => {
   useTrendingMovies();
 
   return (
-    <div className="relative">
+    <div className="bg-black sm:relative sm:bg-none">
       {showGeminiSearch ? (
         <>
           <Header />

@@ -55,11 +55,11 @@ const Header = () => {
   };
 
   return (
-    <div className="mx-5 sm:absolute sm:left-0 sm:right-0 sm:z-10 xl:mx-40 bg-gradient-to-b from-black flex justify-between items-center">
+    <div className="mx-5 bg-gradient-to-b from-black flex flex-col sm:flex-row sm:justify-between sm:items-center sm:absolute sm:left-0 sm:right-0 sm:z-10 xl:mx-40">
       <img className="w-44" src={Image_URLs.APP_LOGO} alt="Netflix Logo" />
 
       {user && (
-        <div className="flex items-center gap-4">
+        <div className="flex justify-center items-center gap-4">
           {showGeminiSearch && (
             <select
               className="py-2 px-4 bg-gray-900 text-white"
@@ -73,13 +73,13 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 bg-purple-800 rounded-lg text-white cursor-pointer"
+            className="px-2 py-1 sm:py-2 sm:px-4 bg-purple-800 rounded-lg text-white cursor-pointer"
             onClick={handleGeminiSearchClick}
           >
             {showGeminiSearch ? "Home Page" : "Gemini Search"}
           </button>
           <img
-            className="w-12 h-12"
+            className="hidden sm:inline w-12 h-12"
             src={Image_URLs.USER_ICON}
             alt="usericon"
           />
